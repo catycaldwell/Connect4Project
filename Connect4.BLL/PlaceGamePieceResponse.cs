@@ -10,5 +10,6 @@ namespace Connect4.BLL
     {
         public PositionStatus PositionStatus { get; set; }
         public int ColumnNumber { get; set; }
+        public bool IsWinningMove { get; set; }
     }
 }

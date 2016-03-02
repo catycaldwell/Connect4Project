@@ -3,6 +3,7 @@
     public enum PositionStatus
     {
         Ok,
+        WinningMove,
         ColumnFull,
         Invalid
     }
