@@ -8,6 +8,8 @@ namespace Connect4
 {
     public class BoardUI
     {
+        // I'm envisioning the board with row 1 on the bottom, up to row 6 on top
+
         public static void DisplayGameBoard()
         {
             Console.Write("   ");
@@ -34,7 +36,6 @@ namespace Connect4
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        string displayChar = "~";
                         Console.Write("       |");
                     }
                 }
