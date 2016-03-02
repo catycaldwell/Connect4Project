@@ -10,8 +10,9 @@ namespace Connect4
     {
         static void Main(string[] args)
         {
-            var gf = new GameFlow();
-            gf.PlayGame();
+            //var gf = new GameFlow();
+            //gf.PlayGame();
+            BoardUI.DisplayGameBoard();
 
             Console.ReadLine();
         }
