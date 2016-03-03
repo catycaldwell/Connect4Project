@@ -9,7 +9,7 @@ namespace Connect4
 {
     internal class BoardUI
     {
-        // I'm envisioning the board with row 1 on the bottom, up to row 6 on top
+        // see Connect4BoardVisualization.txt for how the boardpositions are layed out on the gameboard.
 
         public static void DisplayGameBoard(Board gameBoard)
         {
@@ -29,7 +29,7 @@ namespace Connect4
                     for (int j = 0; j < 7; j++)
                     {
                         string displayChar;
-                        var position = new BoardPosition(j, i);
+                        var position = new BoardPosition(Math.Abs((i/2)-6), j + 1);
 
                         if (gameBoard.BoardHistory.ContainsKey(position) &&
                             gameBoard.BoardHistory[position] == PositionHistory.Player1Piece)
@@ -45,7 +45,7 @@ namespace Connect4
                         }
                         else
                         {
-                            displayChar = String.Format("{0},{1}", j, i);
+                            displayChar = "~";
                             Console.Write("   {0}   |", displayChar);
                         }
                     }
