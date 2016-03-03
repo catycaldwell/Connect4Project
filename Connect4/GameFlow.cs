@@ -68,6 +68,7 @@ namespace Connect4
             bool inputIsValid;
             do
             {
+                //TODO need a way to fill the gameboard object with positions
                 BoardUI.DisplayGameBoard(_model.GameBoard);
 
                 Console.WriteLine();

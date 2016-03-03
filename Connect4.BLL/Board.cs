@@ -15,6 +15,14 @@ namespace Connect4.BLL
         public Board()
         {
             BoardHistory = new Dictionary<BoardPosition, PositionHistory>();
+            //fill the board with empty positions
+            for (int i = 1; i < 7; i++)
+            {
+                for (int j = 1; j < 8; j++)
+                {
+                    BoardHistory.Add(new BoardPosition(i, j), PositionHistory.Empty);
+                }
+            }
         }
 
         public PlaceGamePieceResponse PlaceGamePiece(int columnNumber, bool isPlayerOnesTurn)
@@ -60,7 +68,7 @@ namespace Connect4.BLL
             for (int i = 1; i < 7; i++)
             {
                 var loopPosition = new BoardPosition(i, columnNumber);
-                if (BoardHistory[loopPosition] == PositionHistory.Empty)
+                if (/*BoardHistory.ContainsKey(loopPosition) &&*/ BoardHistory[loopPosition].Equals(PositionHistory.Empty))
                 {
                     return i;
                 }
@@ -100,17 +108,18 @@ namespace Connect4.BLL
             // starting with the right/left check
             // check the right
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition + 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 1)].Equals(pieceToLookFor))
             {
                 piecesInARow++;
                 if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition + 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 2)] == pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -118,17 +127,18 @@ namespace Connect4.BLL
             }
             // then left
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition - 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 1)].Equals(pieceToLookFor))
             {
                 piecesInARow++;
                 if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition - 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 2)] == pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -144,19 +154,20 @@ namespace Connect4.BLL
             // check diagonal /
             // check upper right
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 1, position.ColumnPosition + 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition + 1, position.ColumnPosition + 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition + 1, position.ColumnPosition + 1)].Equals(
+                    pieceToLookFor))
             {
                 piecesInARow++;
                 if (
                     BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)] ==
-                    pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -164,19 +175,20 @@ namespace Connect4.BLL
             }
             // then lower left
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)].Equals(
+                    pieceToLookFor))
             {
                 piecesInARow++;
                 if (
                     BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)] ==
-                    pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -192,17 +204,18 @@ namespace Connect4.BLL
             // check top/bottom line
             // check top
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 1, position.ColumnPosition)) &&
-                BoardHistory[new BoardPosition(position.RowPosition + 1, position.ColumnPosition)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition + 1, position.ColumnPosition)].Equals(pieceToLookFor))
             {
                 piecesInARow++;
                 if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition)] == pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -210,17 +223,18 @@ namespace Connect4.BLL
             }
             // then bottom
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 1, position.ColumnPosition)) &&
-                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition)].Equals(pieceToLookFor))
             {
                 piecesInARow++;
                 if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition)] == pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -236,19 +250,20 @@ namespace Connect4.BLL
             // check diagonal \
             // check upper left
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 1, position.ColumnPosition - 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)].Equals(
+                    pieceToLookFor))
             {
                 piecesInARow++;
                 if (
                     BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)] ==
-                    pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
@@ -256,19 +271,20 @@ namespace Connect4.BLL
             }
             // then lower right
             if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 1, position.ColumnPosition + 1)) &&
-                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition + 1)] == pieceToLookFor)
+                BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition + 1)].Equals(
+                    pieceToLookFor))
             {
                 piecesInARow++;
                 if (
                     BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)] ==
-                    pieceToLookFor)
+                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)].Equals(
+                        pieceToLookFor))
                 {
                     piecesInARow++;
                     if (
                         BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)] ==
-                        pieceToLookFor)
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)].Equals(
+                            pieceToLookFor))
                     {
                         piecesInARow++;
                     }
