@@ -24,6 +24,7 @@ namespace Connect4
                 GetPlayerNames();
             }
             PlaceGamePieces();
+            PromptPlayAgain();
         }
 
         private void GetPlayerNames()
@@ -51,29 +52,28 @@ namespace Connect4
             {
                 while (_isPlayerOnesTurn && !_gameOver)
                 {
-                    TakeTurn(_model.Player1Name, _model.GameBoard, _model.Player2Name);
+                    TakeTurn(_model.Player1Name);
                 }
                 while (!_isPlayerOnesTurn && !_gameOver)
                 {
-                    TakeTurn(_model.Player2Name, _model.GameBoard, _model.Player1Name);
+                    TakeTurn(_model.Player2Name);
                 }
             }
         }
 
-        private void TakeTurn(string currentPlayerName, Board board, string opposingPlayerName)
+        private void TakeTurn(string currentPlayerName) // only need a name, only one board. turn bool is global
         {
             string columnInput;
 
             bool inputIsValid;
             do
             {
-                BoardUI.DisplayGameBoard(board);
+                BoardUI.DisplayGameBoard(_model.GameBoard);
 
                 Console.WriteLine();
                 Console.Write("{0}, select a column : ", currentPlayerName);
                 columnInput = Console.ReadLine();
-                //TODO method to validate columnInput and set input to valid
-                inputIsValid = true;
+                inputIsValid = IsValidColumnInput(columnInput);
 
                 if (!inputIsValid)
                 {
@@ -85,9 +85,91 @@ namespace Connect4
             } while (!inputIsValid);
 
             var column = int.Parse(columnInput);
-            var response = board.PlaceGamePiece(column, true); //TODO fix this to input a players turn
+            var response = _model.GameBoard.PlaceGamePiece(column, _isPlayerOnesTurn);
 
-            //TODO finish writing this method
+            //TODO finish switch
+            switch (response.PositionStatus)
+            {
+                case PositionStatus.Invalid:
+                    Console.WriteLine("Invalid input! (Press enter)");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+
+                case PositionStatus.ColumnFull:
+                    Console.WriteLine("That column is full! Choose again (Press enter)");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+
+                case PositionStatus.Ok:
+                    if (_isPlayerOnesTurn)
+                    {
+                        _isPlayerOnesTurn = false;
+                    }
+                    else if (!_isPlayerOnesTurn)
+                    {
+                        _isPlayerOnesTurn = true;
+                    }
+                    break;
+
+                case PositionStatus.WinningMove:
+                    if (_isPlayerOnesTurn)
+                    {
+                        Console.WriteLine("Congratulations {0}, you won!!", _model.Player1Name);
+                        Console.WriteLine("Press Enter");
+                        Console.ReadLine();
+                        Console.Clear();
+                        _gameOver = true;
+                    }
+                    else if (!_isPlayerOnesTurn)
+                    {
+                        Console.WriteLine("Congratulations {0}, you won!!", _model.Player2Name);
+                        Console.WriteLine("Press Enter");
+                        Console.ReadLine();
+                        Console.Clear();
+                        _gameOver = true;
+                    }
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid input! (Press enter)");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+            }
+        }
+
+        private static bool IsValidColumnInput(string input)
+        {
+            if (input.Length != 1)
+            {
+                return false;
+            }
+            int intInput;
+            if (!int.TryParse(input, out intInput))
+            {
+                return false;
+            }
+            return intInput >= 1 || intInput <= 7;
+        }
+
+        private void PromptPlayAgain()
+        {
+            Console.Write("Play again? Type y or yes to play again. Type anything else to quit : ");
+            var playAgain = Console.ReadLine();
+
+            if (!String.IsNullOrEmpty(playAgain) && (playAgain.ToLower() == "y" || playAgain.ToLower() == "yes"))
+            {
+                Console.Clear();
+                _freshGame = false;
+                _gameOver = false;
+                PlayGame();
+            }
+            else
+            {
+                Console.WriteLine("Thanks for playing! Press Enter to quit.");
+            }
         }
     }
 }

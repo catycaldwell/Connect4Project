@@ -8,7 +8,7 @@ namespace Connect4.BLL
 {
     public class Board
     {
-        // I'm envisioning the board with row 1 on the bottom, up to row 6 on top
+        // see Connect4BoardVisualization.txt for how positions are set up on the board
 
         public Dictionary<BoardPosition, PositionHistory> BoardHistory;
 
@@ -107,8 +107,10 @@ namespace Connect4.BLL
                     BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 2)] == pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition + 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition + 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -123,8 +125,10 @@ namespace Connect4.BLL
                     BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 2)] == pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition, position.ColumnPosition - 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition, position.ColumnPosition - 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -143,12 +147,16 @@ namespace Connect4.BLL
                 BoardHistory[new BoardPosition(position.RowPosition + 1, position.ColumnPosition + 1)] == pieceToLookFor)
             {
                 piecesInARow++;
-                if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)] == pieceToLookFor)
+                if (
+                    BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)) &&
+                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition + 2)] ==
+                    pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition + 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -159,12 +167,16 @@ namespace Connect4.BLL
                 BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)] == pieceToLookFor)
             {
                 piecesInARow++;
-                if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)] == pieceToLookFor)
+                if (
+                    BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)) &&
+                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition - 2)] ==
+                    pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition - 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -187,8 +199,10 @@ namespace Connect4.BLL
                     BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition)] == pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -203,8 +217,10 @@ namespace Connect4.BLL
                     BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition)] == pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -223,12 +239,16 @@ namespace Connect4.BLL
                 BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition - 1)] == pieceToLookFor)
             {
                 piecesInARow++;
-                if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)] == pieceToLookFor)
+                if (
+                    BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)) &&
+                    BoardHistory[new BoardPosition(position.RowPosition + 2, position.ColumnPosition - 2)] ==
+                    pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition + 3, position.ColumnPosition - 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
@@ -239,12 +259,16 @@ namespace Connect4.BLL
                 BoardHistory[new BoardPosition(position.RowPosition - 1, position.ColumnPosition + 1)] == pieceToLookFor)
             {
                 piecesInARow++;
-                if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)) &&
-                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)] == pieceToLookFor)
+                if (
+                    BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)) &&
+                    BoardHistory[new BoardPosition(position.RowPosition - 2, position.ColumnPosition + 2)] ==
+                    pieceToLookFor)
                 {
                     piecesInARow++;
-                    if (BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)) &&
-                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)] == pieceToLookFor)
+                    if (
+                        BoardHistory.ContainsKey(new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)) &&
+                        BoardHistory[new BoardPosition(position.RowPosition - 3, position.ColumnPosition + 3)] ==
+                        pieceToLookFor)
                     {
                         piecesInARow++;
                     }
