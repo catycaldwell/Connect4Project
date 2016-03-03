@@ -11,9 +11,16 @@ namespace Connect4
     {
         private GameModel _model = new GameModel();
 
+        private bool _isPlayerOnesTurn = true;
+        private bool _gameOver;
+        private bool _freshGame = true;
+
         public void PlayGame()
         {
+            _model.GameBoard = new Board();
+
             GetPlayersNames();
+            BoardUI.DisplayGameBoard(_model.GameBoard);
         }
 
         private void GetPlayersNames()

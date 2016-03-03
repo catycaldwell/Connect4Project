@@ -54,7 +54,7 @@ namespace Connect4
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Console.Write("       |");
+                        Console.Write("-------|");
                     }
                 }
             }

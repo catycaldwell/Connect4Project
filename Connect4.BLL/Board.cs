@@ -72,6 +72,7 @@ namespace Connect4.BLL
         {
             //TODO do I have to remove old entry with the same key and positionhistory.empty??
             var boardPositionToAdd = new BoardPosition(row, column);
+            BoardHistory.Remove(boardPositionToAdd);
             BoardHistory.Add(boardPositionToAdd,
                 isPlayerOnesTurn ? PositionHistory.Player1Piece : PositionHistory.Player2Piece);
             return boardPositionToAdd;
