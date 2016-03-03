@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Connect4.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace Connect4
         {
             //var gf = new GameFlow();
             //gf.PlayGame();
-            BoardUI.DisplayGameBoard();
+            Board gameBoard = new Board();
+            BoardUI.DisplayGameBoard(gameBoard);
 
             Console.ReadLine();
         }
