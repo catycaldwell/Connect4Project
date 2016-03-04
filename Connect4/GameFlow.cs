@@ -121,6 +121,7 @@ namespace Connect4
                     if (_isPlayerOnesTurn)
                     {
                         //TODO flashing victory animation
+                        Animations.VictoryFlash(_model.GameBoard, response.WinningPositionValues);
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player1Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();
@@ -130,6 +131,7 @@ namespace Connect4
                     else if (!_isPlayerOnesTurn)
                     {
                         //TODO flashing victory animation
+                        Animations.VictoryFlash(_model.GameBoard, response.WinningPositionValues);
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player2Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();

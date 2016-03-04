@@ -48,9 +48,43 @@ namespace Connect4
             }
         }
 
-        public static void VictoryFlash()
+        public static void VictoryFlash(Board board, Dictionary<int,int> winningMoveValues)
         {
             //TODO so, use the response object to get values for the wining positions. Replace them with highlighted PHistory objects back and forth a couple times.
+            // run 6 toggles, blink three times
+            for (int i = 0; i < 6; i++)
+            {
+            //for each matching position, replace with highlighted history
+                foreach (var key in from key in board.BoardHistory.Keys
+                    from winningRow in winningMoveValues.Keys
+                    where key.RowPosition == winningRow
+                    from winningColumn in winningMoveValues.Values
+                    where key.ColumnPosition == winningColumn
+                    select key)
+                {
+                    if (board.BoardHistory[key] == PositionHistory.Player1Piece)
+                    {
+                        board.BoardHistory[key] = PositionHistory.Player1PieceHighlighted;
+                    }
+                    if (board.BoardHistory[key] == PositionHistory.Player2Piece)
+                    {
+                        board.BoardHistory[key] = PositionHistory.Player2PieceHighlighted;
+                    }
+                    if (board.BoardHistory[key] == PositionHistory.Player1PieceHighlighted)
+                    {
+                        board.BoardHistory[key] = PositionHistory.Player1Piece;
+                    }
+                    if (board.BoardHistory[key] == PositionHistory.Player2PieceHighlighted)
+                    {
+                        board.BoardHistory[key] = PositionHistory.Player2Piece;
+                    }
+
+                    BoardUI.DisplayGameBoard(board);
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+                }
+            }
+            BoardUI.DisplayGameBoard(board);
         }
 
         public static void DisplayExitScreen()

@@ -39,6 +39,22 @@ namespace Connect4
                             displayChar = "2";
                             Console.Write("   {0}   |", displayChar);
                         }
+                        else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
+                            PositionHistory.Player1PieceHighlighted))
+                        {
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            displayChar = "1";
+                            Console.Write("   {0}   |", displayChar);
+                            Console.ResetColor();
+                        }
+                        else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
+                            PositionHistory.Player2PieceHighlighted))
+                        {
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            displayChar = "2";
+                            Console.Write("   {0}   |", displayChar);
+                            Console.ResetColor();
+                        }
                         else
                         {
                             displayChar = "~";
