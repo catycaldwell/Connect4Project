@@ -83,6 +83,7 @@ namespace Connect4
 
             var column = int.Parse(columnInput);
             var response = _model.GameBoard.PlaceGamePiece(column, _isPlayerOnesTurn);
+            // set the board position in the response, but don't set it until the animation?
 
             switch (response.PositionStatus)
             {
@@ -100,6 +101,8 @@ namespace Connect4
 
                 case PositionStatus.Ok:
                     //TODO animation for piece falling into place
+                    Console.Clear();
+                    Animations.PieceDrop(_model.GameBoard, response.BoardPosition, _isPlayerOnesTurn);
                     if (_isPlayerOnesTurn)
                     {
                         _isPlayerOnesTurn = false;

@@ -103,13 +103,13 @@ namespace Connect4.BLL
                     position);
 
             response.PositionStatus = playerVictory ? PositionStatus.WinningMove : PositionStatus.Ok;
+            response.BoardPosition = position;
             return response;
         }
 
         private bool PlayerVictoryCheck(PositionHistory pieceToLookFor, BoardPosition position)
         {
             var piecesInARow = 1;
-            //TODO fix these iterations into a loop
 
             // starting with the right/left check
             // check the right

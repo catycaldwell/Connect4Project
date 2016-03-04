@@ -6,6 +6,8 @@ namespace Connect4
     {
         static void Main(string[] args)
         {
+            Animations.DisplayStartScreen();
+
             var gf = new GameFlow();
             gf.PlayGame();
 
