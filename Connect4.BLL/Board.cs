@@ -46,7 +46,8 @@ namespace Connect4.BLL
                 return null;
             }
 
-            var position = AddPieceToBoard(columnNumber, rowNumber, isPlayerOnesTurn);
+            //var position = AddPieceToBoard(columnNumber, rowNumber, isPlayerOnesTurn); //TODO send the dictionary setting to ui call
+            var position = new BoardPosition(rowNumber, columnNumber);
 
             // check for victory, victory communicated through positionstatus enum
             response = CheckForVictory(position, isPlayerOnesTurn);
@@ -73,9 +74,8 @@ namespace Connect4.BLL
             return 0;
         }
 
-        private BoardPosition AddPieceToBoard(int column, int row, bool isPlayerOnesTurn)
+        public BoardPosition AddPieceToBoard(BoardPosition boardPositionToAdd, bool isPlayerOnesTurn) //TODO remove this method?
         {
-            var boardPositionToAdd = new BoardPosition(row, column);
             CustomRemoveFromDictionary(boardPositionToAdd);
             BoardHistory.Add(boardPositionToAdd,
                 isPlayerOnesTurn ? PositionHistory.Player1Piece : PositionHistory.Player2Piece);

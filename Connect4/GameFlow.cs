@@ -71,6 +71,7 @@ namespace Connect4
                 Console.Write("{0}, select a column : ", currentPlayerName);
                 columnInput = Console.ReadLine();
                 inputIsValid = IsValidColumnInput(columnInput);
+                Console.Clear();
 
                 if (!inputIsValid)
                 {
@@ -100,9 +101,8 @@ namespace Connect4
                     break;
 
                 case PositionStatus.Ok:
-                    //TODO animation for piece falling into place
-                    Console.Clear();
                     Animations.PieceDrop(_model.GameBoard, response.BoardPosition, _isPlayerOnesTurn);
+                    _model.GameBoard.AddPieceToBoard(response.BoardPosition, _isPlayerOnesTurn);
                     if (_isPlayerOnesTurn)
                     {
                         _isPlayerOnesTurn = false;
@@ -111,12 +111,11 @@ namespace Connect4
                     {
                         _isPlayerOnesTurn = true;
                     }
-                    Console.Clear();
                     break;
 
                 case PositionStatus.WinningMove:
-                    //TODO animation for piece falling into place
-                    Console.Clear();
+                    Animations.PieceDrop(_model.GameBoard, response.BoardPosition, _isPlayerOnesTurn);
+                    _model.GameBoard.AddPieceToBoard(response.BoardPosition, _isPlayerOnesTurn);
                     BoardUI.DisplayGameBoard(_model.GameBoard);
                     Console.WriteLine();
                     if (_isPlayerOnesTurn)
