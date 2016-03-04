@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Connect4.BLL
 {
@@ -7,6 +8,7 @@ namespace Connect4.BLL
         // see Connect4BoardVisualization.txt for how positions are set up on the board
 
         public Dictionary<BoardPosition, PositionHistory> BoardHistory;
+        private readonly Dictionary<int, int> _winningPositionValues;
 
         public Board()
         {
@@ -19,6 +21,7 @@ namespace Connect4.BLL
                     BoardHistory.Add(new BoardPosition(i, j), PositionHistory.Empty);
                 }
             }
+            _winningPositionValues = new Dictionary<int, int>();
         }
 
         public PlaceGamePieceResponse PlaceGamePiece(int columnNumber, bool isPlayerOnesTurn)
@@ -46,7 +49,6 @@ namespace Connect4.BLL
                 return null;
             }
 
-            //var position = AddPieceToBoard(columnNumber, rowNumber, isPlayerOnesTurn); //TODO send the dictionary setting to ui call
             var position = new BoardPosition(rowNumber, columnNumber);
 
             // check for victory, victory communicated through positionstatus enum
@@ -74,7 +76,7 @@ namespace Connect4.BLL
             return 0;
         }
 
-        public BoardPosition AddPieceToBoard(BoardPosition boardPositionToAdd, bool isPlayerOnesTurn) //TODO remove this method?
+        public BoardPosition AddPieceToBoard(BoardPosition boardPositionToAdd, bool isPlayerOnesTurn)
         {
             CustomRemoveFromDictionary(boardPositionToAdd);
             BoardHistory.Add(boardPositionToAdd,
@@ -84,14 +86,11 @@ namespace Connect4.BLL
 
         private void CustomRemoveFromDictionary(BoardPosition position)
         {
-            foreach (var key in BoardHistory.Keys)
+            foreach (var key in BoardHistory.Keys.Where(key => key.RowPosition == position.RowPosition &&
+                                                               key.ColumnPosition == position.ColumnPosition))
             {
-                if (key.RowPosition == position.RowPosition &&
-                    key.ColumnPosition == position.ColumnPosition)
-                {
-                    BoardHistory.Remove(key);
-                    break;
-                }
+                BoardHistory.Remove(key);
+                break;
             }
         }
 
@@ -104,6 +103,7 @@ namespace Connect4.BLL
 
             response.PositionStatus = playerVictory ? PositionStatus.WinningMove : PositionStatus.Ok;
             response.BoardPosition = position;
+            response.WinningPositionValues = _winningPositionValues;
             return response;
         }
 
@@ -115,14 +115,17 @@ namespace Connect4.BLL
             // check the right
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, 1))
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition + 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, 2))
                 {
+                    _winningPositionValues.Add(position.RowPosition, position.ColumnPosition + 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, 3))
                     {
+                        _winningPositionValues.Add(position.RowPosition, position.ColumnPosition + 3);
                         piecesInARow++;
                     }
                 }
@@ -130,14 +133,17 @@ namespace Connect4.BLL
             // then left
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, -1))
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition - 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, -2))
                 {
+                    _winningPositionValues.Add(position.RowPosition, position.ColumnPosition - 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 0, -3))
                     {
+                        _winningPositionValues.Add(position.RowPosition, position.ColumnPosition - 3);
                         piecesInARow++;
                     }
                 }
@@ -145,22 +151,27 @@ namespace Connect4.BLL
 
             if (piecesInARow >= 4)
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition);
                 return true;
             }
+            _winningPositionValues.Clear();
             piecesInARow = 1; // reset count for next line check
 
             // check diagonal /
             // check upper right
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 1, 1))
             {
+                _winningPositionValues.Add(position.RowPosition + 1, position.ColumnPosition + 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 2, 2))
                 {
+                    _winningPositionValues.Add(position.RowPosition + 2, position.ColumnPosition + 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 3, 3))
                     {
+                        _winningPositionValues.Add(position.RowPosition + 3, position.ColumnPosition + 3);
                         piecesInARow++;
                     }
                 }
@@ -168,14 +179,17 @@ namespace Connect4.BLL
             // then lower left
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -1, -1))
             {
+                _winningPositionValues.Add(position.RowPosition - 1, position.ColumnPosition - 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -2, -2))
                 {
+                    _winningPositionValues.Add(position.RowPosition - 2, position.ColumnPosition - 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -3, -3))
                     {
+                        _winningPositionValues.Add(position.RowPosition - 3, position.ColumnPosition - 3);
                         piecesInARow++;
                     }
                 }
@@ -183,22 +197,27 @@ namespace Connect4.BLL
 
             if (piecesInARow >= 4)
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition);
                 return true;
             }
+            _winningPositionValues.Clear();
             piecesInARow = 1;
 
             // check top/bottom line
             // check top
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 1, 0))
             {
+                _winningPositionValues.Add(position.RowPosition + 1, position.ColumnPosition);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 2, 0))
                 {
+                    _winningPositionValues.Add(position.RowPosition + 2, position.ColumnPosition);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 3, 0))
                     {
+                        _winningPositionValues.Add(position.RowPosition + 3, position.ColumnPosition);
                         piecesInARow++;
                     }
                 }
@@ -206,14 +225,17 @@ namespace Connect4.BLL
             // then bottom
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -1, 0))
             {
+                _winningPositionValues.Add(position.RowPosition - 1, position.ColumnPosition);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -2, 0))
                 {
+                    _winningPositionValues.Add(position.RowPosition - 2, position.ColumnPosition);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -3, 0))
                     {
+                        _winningPositionValues.Add(position.RowPosition - 3, position.ColumnPosition);
                         piecesInARow++;
                     }
                 }
@@ -221,22 +243,27 @@ namespace Connect4.BLL
 
             if (piecesInARow >= 4)
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition);
                 return true;
             }
+            _winningPositionValues.Clear();
             piecesInARow = 1;
 
             // check diagonal \
             // check upper left
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 1, -1))
             {
+                _winningPositionValues.Add(position.RowPosition + 1, position.ColumnPosition - 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 2, -2))
                 {
+                    _winningPositionValues.Add(position.RowPosition + 2, position.ColumnPosition - 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, 3, -3))
                     {
+                        _winningPositionValues.Add(position.RowPosition + 3, position.ColumnPosition - 3);
                         piecesInARow++;
                     }
                 }
@@ -244,14 +271,17 @@ namespace Connect4.BLL
             // then lower right
             if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -1, 1))
             {
+                _winningPositionValues.Add(position.RowPosition - 1, position.ColumnPosition + 1);
                 piecesInARow++;
 
                 if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -2, 2))
                 {
+                    _winningPositionValues.Add(position.RowPosition - 2, position.ColumnPosition + 2);
                     piecesInARow++;
 
                     if (CustomComparer.PositionHistoryCompare(BoardHistory, position, pieceToLookFor, -3, 3))
                     {
+                        _winningPositionValues.Add(position.RowPosition - 3, position.ColumnPosition + 3);
                         piecesInARow++;
                     }
                 }
@@ -259,9 +289,11 @@ namespace Connect4.BLL
 
             if (piecesInARow >= 4)
             {
+                _winningPositionValues.Add(position.RowPosition, position.ColumnPosition);
                 return true;
             }
 
+            _winningPositionValues.Clear();
             return false;
         }
     }

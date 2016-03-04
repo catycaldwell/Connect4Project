@@ -50,7 +50,7 @@ namespace Connect4
 
         public static void VictoryFlash()
         {
-
+            //TODO so, use the response object to get values for the wining positions. Replace them with highlighted PHistory objects back and forth a couple times.
         }
 
         public static void DisplayExitScreen()

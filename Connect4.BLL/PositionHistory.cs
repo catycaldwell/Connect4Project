@@ -4,6 +4,8 @@
     {
         Empty,
         Player1Piece,
-        Player2Piece
+        Player2Piece,
+        Player1PieceHighlighted,
+        Player2PieceHighlighted
     }
 }
