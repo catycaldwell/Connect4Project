@@ -31,14 +31,14 @@ namespace Connect4
                         string displayChar;
                         var position = new BoardPosition(Math.Abs((i/2)-6), j + 1);
 
-                        if (gameBoard.BoardHistory.ContainsKey(position) &&
-                            gameBoard.BoardHistory[position].Equals(PositionHistory.Player1Piece))
+                        if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
+                            PositionHistory.Player1Piece))
                         {
                             displayChar = "1";
                             Console.Write("   {0}   |", displayChar);
                         }
-                        else if (gameBoard.BoardHistory.ContainsKey(position) &&
-                            gameBoard.BoardHistory[position].Equals(PositionHistory.Player2Piece))
+                        else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
+                            PositionHistory.Player2Piece))
                         {
                             displayChar = "2";
                             Console.Write("   {0}   |", displayChar);
