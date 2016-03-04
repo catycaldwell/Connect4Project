@@ -18,6 +18,7 @@ namespace Connect4
         public void PlayGame()
         {
             _model.GameBoard = new Board();
+            //TODO start splash screen
 
             if (_freshGame)
             {
@@ -68,7 +69,6 @@ namespace Connect4
             bool inputIsValid;
             do
             {
-                //TODO need a way to fill the gameboard object with positions
                 BoardUI.DisplayGameBoard(_model.GameBoard);
 
                 Console.WriteLine();
@@ -88,7 +88,6 @@ namespace Connect4
             var column = int.Parse(columnInput);
             var response = _model.GameBoard.PlaceGamePiece(column, _isPlayerOnesTurn);
 
-            //TODO finish switch
             switch (response.PositionStatus)
             {
                 case PositionStatus.Invalid:
@@ -104,6 +103,7 @@ namespace Connect4
                     break;
 
                 case PositionStatus.Ok:
+                    //TODO animation for piece falling into place
                     if (_isPlayerOnesTurn)
                     {
                         _isPlayerOnesTurn = false;
@@ -112,11 +112,17 @@ namespace Connect4
                     {
                         _isPlayerOnesTurn = true;
                     }
+                    Console.Clear();
                     break;
 
                 case PositionStatus.WinningMove:
+                    //TODO animation for piece falling into place
+                    Console.Clear();
+                    BoardUI.DisplayGameBoard(_model.GameBoard);
+                    Console.WriteLine();
                     if (_isPlayerOnesTurn)
                     {
+                        //TODO flashing victory animation
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player1Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();
@@ -125,6 +131,7 @@ namespace Connect4
                     }
                     else if (!_isPlayerOnesTurn)
                     {
+                        //TODO flashing victory animation
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player2Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();
@@ -170,6 +177,7 @@ namespace Connect4
             else
             {
                 Console.WriteLine("Thanks for playing! Press Enter to quit.");
+                //TODO exit splash screen?
             }
         }
     }

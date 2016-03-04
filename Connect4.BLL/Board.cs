@@ -37,8 +37,8 @@ namespace Connect4.BLL
 
             // check for full column
             var topPositionInColumn = new BoardPosition(6, columnNumber);
-            if (BoardHistory.ContainsKey(topPositionInColumn) &&
-                BoardHistory[topPositionInColumn] != PositionHistory.Empty)
+            if (CustomComparer.PositionHistoryCompare(BoardHistory, topPositionInColumn, PositionHistory.Player1Piece) ||
+                CustomComparer.PositionHistoryCompare(BoardHistory, topPositionInColumn, PositionHistory.Player2Piece))
             {
                 response.PositionStatus = PositionStatus.ColumnFull;
                 return response;
@@ -79,12 +79,24 @@ namespace Connect4.BLL
 
         private BoardPosition AddPieceToBoard(int column, int row, bool isPlayerOnesTurn)
         {
-            //TODO do I have to remove old entry with the same key and positionhistory.empty??
             var boardPositionToAdd = new BoardPosition(row, column);
-            BoardHistory.Remove(boardPositionToAdd);
+            CustomRemoveFromDictionary(boardPositionToAdd);
             BoardHistory.Add(boardPositionToAdd,
                 isPlayerOnesTurn ? PositionHistory.Player1Piece : PositionHistory.Player2Piece);
             return boardPositionToAdd;
+        }
+
+        private void CustomRemoveFromDictionary(BoardPosition position)
+        {
+            foreach (var key in BoardHistory.Keys)
+            {
+                if (key.RowPosition == position.RowPosition &&
+                    key.ColumnPosition == position.ColumnPosition)
+                {
+                    BoardHistory.Remove(key);
+                    break;
+                }
+            }
         }
 
         private PlaceGamePieceResponse CheckForVictory(BoardPosition position, bool isPlayerOnesTurn)
@@ -101,10 +113,7 @@ namespace Connect4.BLL
         private bool PlayerVictoryCheck(PositionHistory pieceToLookFor, BoardPosition position)
         {
             var piecesInARow = 1;
-            // return true if victory
-
             //TODO fix these iterations into a loop
-            //TODO get a list of winning positions
 
             // starting with the right/left check
             // check the right
