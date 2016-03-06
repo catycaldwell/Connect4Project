@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 using Connect4.BLL;
 
 namespace Connect4
@@ -50,40 +47,6 @@ namespace Connect4
 
         public static void VictoryFlash(Board board, Dictionary<int,int> winningMoveValues, bool playerOnesTurn)
         {
-            ////TODO so, use the response object to get values for the wining positions. Replace them with highlighted PHistory objects back and forth a couple times.
-            //// run 6 toggles, blink three times
-            //for (int i = 0; i < 6; i++)
-            //{
-            ////for each matching position, replace with highlighted history
-            //    foreach (var key in from key in board.BoardHistory.Keys
-            //        from winningRow in winningMoveValues.Keys
-            //        where key.RowPosition == winningRow
-            //        from winningColumn in winningMoveValues.Values
-            //        where key.ColumnPosition == winningColumn
-            //        select key)
-            //    {
-            //        if (board.BoardHistory[key] == PositionHistory.Player1Piece)
-            //        {
-            //            board.BoardHistory[key] = PositionHistory.Player1PieceHighlighted;
-            //        }
-            //        if (board.BoardHistory[key] == PositionHistory.Player2Piece)
-            //        {
-            //            board.BoardHistory[key] = PositionHistory.Player2PieceHighlighted;
-            //        }
-            //        if (board.BoardHistory[key] == PositionHistory.Player1PieceHighlighted)
-            //        {
-            //            board.BoardHistory[key] = PositionHistory.Player1Piece;
-            //        }
-            //        if (board.BoardHistory[key] == PositionHistory.Player2PieceHighlighted)
-            //        {
-            //            board.BoardHistory[key] = PositionHistory.Player2Piece;
-            //        }
-
-            //        BoardUI.DisplayGameBoard(board);
-            //        System.Threading.Thread.Sleep(300);
-            //        Console.Clear();
-            //    }
-            //}
             var winningPositions = new List<BoardPosition>();
             foreach (var positionValue in winningMoveValues)
             {
@@ -94,7 +57,34 @@ namespace Connect4
 
             for (int i = 0; i < 6; i++)
             {
-                
+                foreach (var position in winningPositions)
+                {
+                    if (playerOnesTurn)
+                    {
+                        if (CustomComparer.PositionHistoryCompare(board.BoardHistory, position, PositionHistory.Player1Piece)) 
+                        {
+                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player1PieceHighlighted);
+                        }
+                        else
+                        {
+                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player1Piece);
+                        }
+                    }
+                    else
+                    {
+                        if (CustomComparer.PositionHistoryCompare(board.BoardHistory, position, PositionHistory.Player2Piece))
+                        {
+                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player2PieceHighlighted);
+                        }
+                        else
+                        {
+                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player2Piece);
+                        }
+                    }
+                }
+                BoardUI.DisplayGameBoard(board);
+                System.Threading.Thread.Sleep(300);
+                Console.Clear();
             }
 
             BoardUI.DisplayGameBoard(board);

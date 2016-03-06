@@ -84,7 +84,6 @@ namespace Connect4
 
             var column = int.Parse(columnInput);
             var response = _model.GameBoard.PlaceGamePiece(column, _isPlayerOnesTurn);
-            // set the board position in the response, but don't set it until the animation?
 
             switch (response.PositionStatus)
             {
@@ -118,10 +117,11 @@ namespace Connect4
                     _model.GameBoard.AddPieceToBoard(response.BoardPosition, _isPlayerOnesTurn);
                     BoardUI.DisplayGameBoard(_model.GameBoard);
                     Console.WriteLine();
+                    Console.Clear();
                     if (_isPlayerOnesTurn)
                     {
-                        //TODO flashing victory animation
                         Animations.VictoryFlash(_model.GameBoard, response.WinningPositionValues, _isPlayerOnesTurn);
+                        Console.WriteLine();
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player1Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();
@@ -130,8 +130,8 @@ namespace Connect4
                     }
                     else if (!_isPlayerOnesTurn)
                     {
-                        //TODO flashing victory animation
                         Animations.VictoryFlash(_model.GameBoard, response.WinningPositionValues, _isPlayerOnesTurn);
+                        Console.WriteLine();
                         Console.WriteLine("Congratulations {0}, you won!!", _model.Player2Name);
                         Console.WriteLine("Press Enter");
                         Console.ReadLine();
