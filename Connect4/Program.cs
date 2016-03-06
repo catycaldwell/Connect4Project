@@ -10,8 +10,6 @@ namespace Connect4
 
             var gf = new GameFlow();
             gf.PlayGame();
-
-            Console.ReadLine();
         }
     }
 }

@@ -92,7 +92,13 @@ namespace Connect4
 
         public static void DisplayExitScreen()
         {
-
+            Console.Write(@"___________.__            __               _____                     .__                .__              ._.
+\__    ___/|  |__   ____ |  | __  ______ _/ ____\___________  ______ |  | _____  ___.__.|__| ____    ____| |
+  |    |   |  |  \ /    \|  |/ / /  ___/ \   __\/  _ \_  __ \ \____ \|  | \__  \<   |  ||  |/    \  / ___\ |
+  |    |   |   Y  \   |  \    <  \___ \   |  | (  <_> )  | \/ |  |_> >  |__/ __ \\___  ||  |   |  \/ /_/  >|
+  |____|   |___|  /___|  /__|_ \/____  >  |__|  \____/|__|    |   __/|____(____  / ____||__|___|  /\___  /__
+                \/     \/     \/     \/                       |__|             \/\/             \//_____/ \/");
+            System.Threading.Thread.Sleep(300);
         }
 
         private static void ReplaceHistory(Dictionary<BoardPosition, PositionHistory> boardHistory,

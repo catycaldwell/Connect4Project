@@ -176,8 +176,7 @@ namespace Connect4
             }
             else
             {
-                Console.WriteLine("Thanks for playing! Press Enter to quit.");
-                //TODO exit splash screen?
+                Animations.DisplayExitScreen();
             }
         }
     }
