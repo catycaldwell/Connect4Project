@@ -12,13 +12,17 @@ namespace Connect4
             Console.Write("   ");
             for (int i = 0; i < 7; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("    {0}   ", i + 1);
+                Console.ResetColor();
             }
             Console.Write("\n");
 
             for (int i = 0; i < 11; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\n   |");
+                Console.ResetColor();
 
                 if (i % 2 == 0)
                 {
@@ -30,35 +34,57 @@ namespace Connect4
                         if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
                             PositionHistory.Player1Piece))
                         {
-                            displayChar = "1";
-                            Console.Write("   {0}   |", displayChar);
+                            displayChar = "X";
+                            Console.Write("   ");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(displayChar);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("   |");
+                            Console.ResetColor();
                         }
                         else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
                             PositionHistory.Player2Piece))
                         {
-                            displayChar = "2";
-                            Console.Write("   {0}   |", displayChar);
+                            displayChar = "X";
+                            Console.Write("   ");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write(displayChar);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("   |");
+                            Console.ResetColor();
                         }
                         else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
                             PositionHistory.Player1PieceHighlighted))
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            displayChar = "1";
-                            Console.Write("   {0}   |", displayChar);
+                            displayChar = "X";
+                            Console.Write("   ");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Write(displayChar);
+                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("   |");
                             Console.ResetColor();
                         }
                         else if (CustomComparer.PositionHistoryCompare(gameBoard.BoardHistory, position,
                             PositionHistory.Player2PieceHighlighted))
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            displayChar = "2";
-                            Console.Write("   {0}   |", displayChar);
+                            displayChar = "X";
+                            Console.Write("   ");
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.Write(displayChar);
+                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("   |");
                             Console.ResetColor();
                         }
                         else
                         {
-                            displayChar = "~";
+                            displayChar = " ";
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.Write("   {0}   |", displayChar);
+                            Console.ResetColor();
                         }
                     }
                 }
@@ -66,14 +92,18 @@ namespace Connect4
                 {
                     for (int j = 0; j < 7; j++)
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("-------|");
+                        Console.ResetColor();
                     }
                 }
             }
             Console.Write("\n   ");
             for (int i = 0; i < 57; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("_");
+                Console.ResetColor();
             }
         }
     }

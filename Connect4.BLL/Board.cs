@@ -51,7 +51,6 @@ namespace Connect4.BLL
 
             var position = new BoardPosition(rowNumber, columnNumber);
 
-            // check for victory, victory communicated through positionstatus enum
             response = CheckForVictory(position, isPlayerOnesTurn);
 
             return response;
