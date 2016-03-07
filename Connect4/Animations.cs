@@ -45,15 +45,11 @@ namespace Connect4
             }
         }
 
-        public static void VictoryFlash(Board board, Dictionary<int,int> winningMoveValues, bool playerOnesTurn)
+        public static void VictoryFlash(Board board, Dictionary<int, int> winningMoveValues, bool playerOnesTurn)
         {
-            var winningPositions = new List<BoardPosition>();
-            foreach (var positionValue in winningMoveValues)
-            {
-                var winningPosition = new BoardPosition(positionValue.Key, positionValue.Value);
-
-                winningPositions.Add(winningPosition);
-            }
+            var winningPositions =
+                winningMoveValues.Select(positionValue => new BoardPosition(positionValue.Key, positionValue.Value))
+                    .ToList();
 
             for (int i = 0; i < 6; i++)
             {
@@ -61,25 +57,19 @@ namespace Connect4
                 {
                     if (playerOnesTurn)
                     {
-                        if (CustomComparer.PositionHistoryCompare(board.BoardHistory, position, PositionHistory.Player1Piece)) 
-                        {
-                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player1PieceHighlighted);
-                        }
-                        else
-                        {
-                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player1Piece);
-                        }
+                        ReplaceHistory(board.BoardHistory, position,
+                            CustomComparer.PositionHistoryCompare(board.BoardHistory, position,
+                                PositionHistory.Player1Piece)
+                                ? PositionHistory.Player1PieceHighlighted
+                                : PositionHistory.Player1Piece);
                     }
                     else
                     {
-                        if (CustomComparer.PositionHistoryCompare(board.BoardHistory, position, PositionHistory.Player2Piece))
-                        {
-                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player2PieceHighlighted);
-                        }
-                        else
-                        {
-                            ReplaceHistory(board.BoardHistory, position, PositionHistory.Player2Piece);
-                        }
+                        ReplaceHistory(board.BoardHistory, position,
+                            CustomComparer.PositionHistoryCompare(board.BoardHistory, position,
+                                PositionHistory.Player2Piece)
+                                ? PositionHistory.Player2PieceHighlighted
+                                : PositionHistory.Player2Piece);
                     }
                 }
                 BoardUI.DisplayGameBoard(board);
@@ -92,7 +82,8 @@ namespace Connect4
 
         public static void DisplayExitScreen()
         {
-            Console.Write(@"___________.__            __               _____                     .__                .__              ._.
+            Console.Write(
+                @"___________.__            __               _____                     .__                .__              ._.
 \__    ___/|  |__   ____ |  | __  ______ _/ ____\___________  ______ |  | _____  ___.__.|__| ____    ____| |
   |    |   |  |  \ /    \|  |/ / /  ___/ \   __\/  _ \_  __ \ \____ \|  | \__  \<   |  ||  |/    \  / ___\ |
   |    |   |   Y  \   |  \    <  \___ \   |  | (  <_> )  | \/ |  |_> >  |__/ __ \\___  ||  |   |  \/ /_/  >|
